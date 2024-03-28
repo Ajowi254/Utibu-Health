@@ -1,0 +1,15 @@
+
+.tt{
+    color: rgb(238, 237, 237);
+    
+}
+.rr{
+    background-color: aliceblue;
+    padding: 20px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+    height: 100%;
+}
