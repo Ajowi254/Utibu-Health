@@ -14,20 +14,28 @@ import { env } from "../../config";
 function OrderPage() {
   const context = useContext(UserContext);
   const { product, setOrders, setOrderz, username } = context;
-  const [order, setOrder] = useState([])
-  const [customerDetail, SetCustomerDetail] = useState({});
-  const [payment, setPayment] = useState({});
+  const [order, setOrder] = useState(JSON.parse(localStorage.getItem('order')) || []);
+  const [customerDetail, SetCustomerDetail] = useState(JSON.parse(localStorage.getItem('customerDetail')) || {});
+  const [payment, setPayment] = useState(JSON.parse(localStorage.getItem('payment')) || {});  
   const [quantitys, setQuantitys] = useState({});
   const [paymentType, setPaymentType] = useState("");
   const [paymenterror, setPaymentError] = useState("");
   const [button,setButton] = useState(false)
 
+  useEffect(() => {
+    localStorage.setItem('order', JSON.stringify(order));
+    localStorage.setItem('customerDetail', JSON.stringify(customerDetail));
+    localStorage.setItem('payment', JSON.stringify(payment));
+  }, [order, customerDetail, payment]);
+  
+
   const formiks = useFormik({
     initialValues: {
       orderDate: new Date().toLocaleDateString("de-DE"),
-      customerName: "",
-      customerMobile: "",
+      customerName: customerDetail.customerName || "",
+      customerMobile: customerDetail.customerMobile || "",
     },
+    
     validate: (values) => {
       const errors = {};
       if (values.orderDate === 0) {
@@ -50,7 +58,9 @@ function OrderPage() {
     onSubmit: async (values) => {
       toast.success("Customer Details Added")
       SetCustomerDetail(values)
-
+      
+      // Save customer details to localStorage
+      localStorage.setItem('customerDetail', JSON.stringify(values));
       // Add this block to make a POST request to the /api/customer endpoint
       try {
         const response = await axios.post(`${env.api}/api/customer`, values);
@@ -59,6 +69,7 @@ function OrderPage() {
         console.error(error);
       }
     },
+    
   });
 
   const formik = useFormik({
@@ -216,7 +227,7 @@ function OrderPage() {
       console.error(error);
     }
   };
-  
+
   return (
     <div className='order-page' >
       <h6>Order Page</h6>
