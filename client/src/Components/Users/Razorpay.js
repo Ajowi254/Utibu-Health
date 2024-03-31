@@ -13,8 +13,10 @@ function Razorpay() {
   const { orders, setOrders } = context;
   const { order, payment, customer, paymenttype, billerId, billerName } = orders
   const { Total } = payment
+ 
   const send = async (id) => {
-    console.log('Customer ID:', billerId);
+    let customerId = window.localStorage.getItem("customerId");
+    console.log(`Customer ID: ${customerId}`); // Log the customer ID
     let data = {
       payment_id: id,
       order,
@@ -24,12 +26,14 @@ function Razorpay() {
       billerName,
       billerId
     }
-    console.log('Sending order data to backend:', data);
-  let response = await axios.post(`${env.api}/orders/order`, data);
-  console.log('Received order ID from backend:', response.data.id);
-  setOrders({})
-  navigate(`/user-portal/order-success/${response.data.id}`)
-}
+    console.log(`Sending order data to backend: ${JSON.stringify(data)}`); // Log the data being sent
+    let response = await axios.post(`${env.api}/api/order-history/${customerId}`, data); // Use the retrieved customer ID in the API endpoint
+    console.log(`Received response from backend: ${JSON.stringify(response.data)}`); // Log the entire response from the backend
+    setOrders({});
+    navigate(`/user-portal/order-success/${response.data.id}`)
+  }
+  
+  
   const handleSubmit = () => {
     var options = {
       key: "rzp_test_cSjwpLQPPi0Uxz",

@@ -36,7 +36,8 @@ export const UserProvider = ({ children }) => {
     if (paymenttype === "online_payment") {
       navigate("/user-portal/razorpay")
     } else {
-      let mongo_id = await axios.post(`${env.api}/orders/order`, data);
+      let customerId = window.localStorage.getItem("customerId"); // Retrieve the customer ID from local storage
+      let mongo_id = await axios.post(`${env.api}/api/order-history/${customerId}`, data); // Use the retrieved customer ID in the API endpoint
       setOrders({});
       navigate(`/user-portal/order-success/${mongo_id.data.id}`)
     }

@@ -168,21 +168,23 @@ function OrderPage() {
   
           // Save customer details
           axios.post('http://localhost:5000/api/customer', customer)
-            .then(response => {
-              const customer_id = response.data.id;
-              console.log(`Saved customer ID: ${customer_id}`);
-              // Store customer_id in your state or wherever you're storing it
+  .then(response => {
+    const customer_id = response.data.id;
+    console.log(`Saved customer ID: ${customer_id}`);
+    // Store customer_id in your state or local storage
+    window.localStorage.setItem("customerId", customer_id);
+
+    console.log(`Making API call with customer ID: ${customer_id}`);
+    // Save order details
+    return axios.post(`http://localhost:5000/api/order-history/${customer_id}`, orderDetails);
+  })
+  .then(response => {
+    console.log(response.data.message);  // Order details saved successfully
+  })
+  .catch(error => {
+    console.error(error);
+  });
   
-              console.log(`Making API call with customer ID: ${customer_id}`);
-              // Save order details
-              return axios.post(`http://localhost:5000/api/order-history/${customer_id}`, orderDetails);
-            })
-            .then(response => {
-              console.log(response.data.message);  // Order details saved successfully
-            })
-            .catch(error => {
-              console.error(error);
-            });
         } else {
           setPaymentError("Select your Payment Mode")
           toast.warn("Select your Payment Mode");

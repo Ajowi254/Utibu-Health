@@ -8,17 +8,17 @@ from datetime import datetime
 
 class CustomerController(Resource):
     def post(self):
-        print(f"Request headers: {request.headers}")  # Log the request headers
-        print(f"Request body: {request.get_data(as_text=True)}")  # Log the request body
-
         customer_data = request.get_json()
-        print(f"Received customer data: {customer_data}")  # Log the received data
 
+        # Check if a customer with the same details already exists
+        existing_customer = Customer.query.filter_by(name=customer_data['customerName'], mobile_number=customer_data['customerMobile']).first()
+        if existing_customer:
+            # If the customer exists, return a message without creating a new entry
+            return {'message': 'A customer with these details already exists'}, 400
+
+        # If the customer does not exist, proceed to create a new entry
         try:
-            # Convert order_date string to datetime
-            order_date = datetime.strptime(customer_data['orderDate'], '%d.%m.%Y')  # Change the format here
-            print(f"Parsed order_date: {order_date}")  # Log the parsed date
-
+            order_date = datetime.strptime(customer_data['orderDate'], '%d.%m.%Y')
             new_customer = Customer(
                 name=customer_data['customerName'],
                 mobile_number=customer_data['customerMobile'],
@@ -26,16 +26,13 @@ class CustomerController(Resource):
             )
             db.session.add(new_customer)
             db.session.commit()
-            print(f"Saved customer ID: {new_customer.id}")
             return new_customer.to_dict(), 201
         except Exception as error:
-            print(f"Error: {str(error)}")
             return {
                 'error': str(error),
                 'message': 'Internal Server Error',
                 'statusCode': 500
             }
-
 
     def get(self, customer_id=None):
         try:
@@ -51,6 +48,28 @@ class CustomerController(Resource):
 
                 return customer.to_dict(), 200  # Return the customer's details
         except Exception as error:
+            return {
+                'error': str(error),
+                'message': 'Internal Server Error',
+                'statusCode': 500
+            }
+
+    def get(self, customer_id=None):
+        print(f"Received GET request for customer_id: {customer_id}")  # Log the received customer_id
+        try:
+            if customer_id is None:
+                # No customer_id provided, return all customers
+                customers = Customer.query.all()
+                return [customer.to_dict() for customer in customers], 200
+            else:
+                # customer_id provided, return that customer
+                customer = Customer.query.get(customer_id)
+                if not customer:
+                    return {'message': 'Customer not found'}, 404
+
+                return customer.to_dict(), 200  # Return the customer's details
+        except Exception as error:
+            print(f"Error in GET /api/customer/{customer_id}: {str(error)}")
             return {
                 'error': str(error),
                 'message': 'Internal Server Error',

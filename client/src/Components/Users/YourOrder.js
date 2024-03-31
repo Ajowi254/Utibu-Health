@@ -1,88 +1,71 @@
-//yourorder.js
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { env } from '../../config';
 import './YourOrder.css'
+
 function YourOrder() {
-    const [order, setOrder] = useState([])
+  const [order, setOrder] = useState([])
 
-    const getOrder = async (id) => {
-      try {
-        console.log('Customer ID:', id);
-        let response = await axios.get(`${env.api}/orders/your-order/${id}`);
-        const { data } = response;
-        console.log('Received order history from backend:', data);
-        setOrder(data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    
-
-    useEffect(() => {
-        let x = window.localStorage.getItem("userId")
-        getOrder(x)
-    }, [])
-
-    console.log(order);
-    return (
-        <div>
-            <div className='p-3'>
-                <h2>My Order : -</h2>
-            </div>
-            <div className="m-3 table_responsive qqq">
-          <table className="table table-bordered text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Date</th>
-                <th>Customer Name</th>
-                <th>Customer Mobile</th>
-                <th>Payment Mode</th>
-                <th scope="col">order</th>
-                <th scope="col">Amount</th>
-                {/* <th scope="col">No Of orders to put a bill</th> */}
-                {/* <th scope="col">Action</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {
-                order.length > 0 && order ?  (
-                  order.length > 0 && order.map((item,index)=>{
-                    return <tr key={index}>
-                            <td>{index +1}</td>
-                            <td>{item.customer.orderDate}</td>
-                            <td>{item.customer.customerName}</td>
-                            <td>{item.customer.customerMobile}</td>
-                            <td>{item.paymenttype}</td>
-                            
-                            <td>{item.order.map((item,index)=>{
-                                return<  >
-                                <span> <span className='error'>Product Name</span> :  {item.product}</span><br />
-                                <span>  <span className='error'>Quantity</span> :  {item.quantity} </span><br />
-                                <span> <span className='error'>Rate</span> : Rs : -  {item.rate}</span><br />
-                                <span> <span className='error'>Total</span> : Rs : -  {item.total}</span><br />
-                                <hr className=' p-1'/>
-                                </>
-                            })}</td>
-                            <td><span> <span className='error'>Product Amount</span> : Rs : -  {item.payment.Amount}</span><br />
-                            <span> <span className='error'>Discount</span> : Rs : - {item.payment.Discount}</span><br />
-                            <span> <span className='error'>GST</span> : Rs : - {item.payment.Gst}</span><br />
-                            <hr />
-                            <span> <span className='error'>Total</span> : Rs : - {item.payment.Total}</span><br />
-                            
-                            </td>
-                    </tr>
-                  })
-                 ) : (<tr> <h5>No Record Found</h5></tr> )
-              }
-           
-           
-            </tbody>
-          </table>
-        </div>
-        </div>
-    )
+  useEffect(() => {
+    let customerId = window.localStorage.getItem("customerId") // Retrieve the customer ID using the key "customerId"
+    console.log(`Fetching order history for customer ID: ${customerId}`); // Log the customer ID
+    if (customerId) {
+      getOrder(customerId)
+    } else {
+      console.log('Customer ID not found in local storage'); // Log an error if the customer ID is not found
+    }
+  }, [])
+  
+  const getOrder = async (customerId) => {
+    try {
+      console.log(`Making GET request to /api/order-history/${customerId}`);  // Log the API call
+      let response = await axios.get(`${env.api}/api/order-history/${customerId}`); // Use the retrieved customer ID in the API endpoint
+      const { data } = response;
+      console.log(`Received order history from backend: ${JSON.stringify(data)}`); // Log the received data
+      setOrder(data);
+    } catch (error) {
+      console.log(`Error in GET /api/order-history/${customerId}: ${error}`);  // Log the error in more detail
+    }
+  };
+  
+  console.log(order);
+  return (
+    <div>
+      <div className='p-3'>
+        <h2>My Order : -</h2>
+      </div>
+      <div className="m-3 table_responsive qqq">
+        <table className="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th>Customer ID</th>
+              <th>Payment Mode</th>
+              <th scope="col">Order</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              order.length > 0 && order ?  (
+                order.map((item,index)=>{
+                  return <tr key={index}>
+                    <td>{index +1}</td>
+                    <td>{item.date}</td>
+                    <td>{item.customer_id}</td>
+                    <td>{item.payment_mode}</td>
+                    <td>{`Product: ${item.order_details.product}, Quantity: ${item.order_details.quantity}`}</td>
+                    <td>{item.amount}</td>
+                  </tr>
+                })
+              ) : (<tr> <h5>No Record Found</h5></tr> )
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
 }
 
 export default YourOrder
