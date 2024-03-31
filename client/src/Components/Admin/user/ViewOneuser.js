@@ -1,3 +1,4 @@
+//viewoneuser.js
 import React, { useContext } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import AdminContext from '../../Context/adminContext';

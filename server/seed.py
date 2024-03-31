@@ -81,6 +81,8 @@ def seed_database():
     order_data = {
         'items': ['item1', 'item2', 'item3'],
         'total': 100.0,
+        'payment_mode': 'online',  # Add this line
+        'amount': 1101,  # Add this line
     }
 
     payment_data = {
@@ -99,6 +101,7 @@ def seed_database():
         created_at=datetime.utcnow(),
         user_id=2,
     )
+
 
     product1 = ProductDetails(
         brand="PharmaBrand1",

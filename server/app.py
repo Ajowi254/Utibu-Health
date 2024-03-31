@@ -27,6 +27,8 @@ def create_app(config_class=Config):
     from models.product import ProductDetails
     from models.category import CategoryDetails
     from models.brand import BrandDetails
+    from models.customerModel import Customer 
+    from models.orderHistoryModel import OrderHistory 
 
     @app.route('/')
     def home():
@@ -59,6 +61,8 @@ def create_app(config_class=Config):
     from controllers.user.order.invoice import invoice
     from controllers.user.order.your_order import your_order
     from controllers.user.order.product_resource import ProductResource
+    from controllers.user.order.customerController import CustomerController  
+    from controllers.user.order.orderHistoryController import OrderHistoryController
     from controllers.admin.dashboard.dashboard_overview import dashboard_overview
     from controllers.admin.dashboard.bar_chart import bar_chart
     from controllers.admin.dashboard.dashboard_product import dashboard_product
@@ -94,6 +98,9 @@ def create_app(config_class=Config):
     api.add_resource(dashboard_product, '/dashboardproduct')#
     api.add_resource(Logout, '/logout')#
     api.add_resource(ProductResource, '/api/product/<int:id>')
+    api.add_resource(CustomerController, '/api/customer', '/api/customer/<int:customer_id>')
+    api.add_resource(OrderHistoryController, '/api/order-history/<int:customer_id>')
+
 
     return app
 if __name__ == '__main__':

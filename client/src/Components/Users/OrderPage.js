@@ -1,4 +1,4 @@
-//orderpage.js
+//Orderpage.js
 import React, { useContext, useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import './OrderPage.css'
@@ -9,10 +9,7 @@ import { faPlus,faFloppyDisk,faCartFlatbedSuitcase,faTrash} from '@fortawesome/f
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import load from "../../asset/loading3.svg";
-
-const api = axios.create({
-  baseURL: 'http://localhost:5000'
-});
+import { env } from "../../config";
 
 function OrderPage() {
   const context = useContext(UserContext);
@@ -24,8 +21,6 @@ function OrderPage() {
   const [paymentType, setPaymentType] = useState("");
   const [paymenterror, setPaymentError] = useState("");
   const [button,setButton] = useState(false)
-
-
 
   const formiks = useFormik({
     initialValues: {
@@ -55,6 +50,14 @@ function OrderPage() {
     onSubmit: async (values) => {
       toast.success("Customer Details Added")
       SetCustomerDetail(values)
+
+      // Add this block to make a POST request to the /api/customer endpoint
+      try {
+        const response = await axios.post(`${env.api}/api/customer`, values);
+        console.log(response.data);  // Log the server's response
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
@@ -153,7 +156,7 @@ function OrderPage() {
         if (paymenttype) {
           orderDetails = {
             customer,
-            order,
+            order: order.map(item => ({...item, payment_mode: paymenttype, amount: payment.Total})), // Add payment_mode and amount to each order item
             payment,
             paymenttype,
             billerName: x,
@@ -162,6 +165,24 @@ function OrderPage() {
           setButton(true)
           setOrders(orderDetails);
           setOrderz(orderDetails);
+  
+          // Save customer details
+          axios.post('http://localhost:5000/api/customer', customer)
+            .then(response => {
+              const customer_id = response.data.id;
+              console.log(`Saved customer ID: ${customer_id}`);
+              // Store customer_id in your state or wherever you're storing it
+  
+              console.log(`Making API call with customer ID: ${customer_id}`);
+              // Save order details
+              return axios.post(`http://localhost:5000/api/order-history/${customer_id}`, orderDetails);
+            })
+            .then(response => {
+              console.log(response.data.message);  // Order details saved successfully
+            })
+            .catch(error => {
+              console.error(error);
+            });
         } else {
           setPaymentError("Select your Payment Mode")
           toast.warn("Select your Payment Mode");
@@ -172,12 +193,14 @@ function OrderPage() {
     } else {
       toast.warn("Enter Customer Details and click save button!")
     }
-  }
+  };
+
+  
   const quantity = async (id) => {
     console.log(`Fetching quantity for product with ID: ${id}`); // Log the product_id
   
     try {
-      const response = await api.get(`/api/product/${id}`);
+      const response = await axios.get(`${env.api}/api/product/${id}`);
   
       if (response.status === 200) {
         const data = response.data;
@@ -191,7 +214,6 @@ function OrderPage() {
       console.error(error);
     }
   };
-
   
   return (
     <div className='order-page' >

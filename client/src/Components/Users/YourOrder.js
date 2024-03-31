@@ -1,3 +1,4 @@
+//yourorder.js
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { env } from '../../config';
@@ -6,14 +7,17 @@ function YourOrder() {
     const [order, setOrder] = useState([])
 
     const getOrder = async (id) => {
-        try {
-            let value = await axios.get(`${env.api}/orders/your-order/${id}`);
-            const { data } = value;
-            setOrder(data.data);
-        } catch (error) {
-            console.log(error);
-        }
+      try {
+        console.log('Customer ID:', id);
+        let response = await axios.get(`${env.api}/orders/your-order/${id}`);
+        const { data } = response;
+        console.log('Received order history from backend:', data);
+        setOrder(data.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
+    
 
     useEffect(() => {
         let x = window.localStorage.getItem("userId")

@@ -2,7 +2,16 @@
 
 
 ## DELIVERABLES
-
+Mobile App: Develop a mobile application that allows registered customers of Utibu Health to make orders for their medication and check their statement. The app should have the following features:
+User Registration and Login
+Medication Ordering
+Order Confirmation based on stock availability
+Statement Checking
+Order Confirmation: Implement a feature in the mobile app that confirms the order to the client if it is successful, based on the level of stock in the pharmacy in the current database.
+Payment Options: Implement a feature that allows the client to pay immediately or choose to pay later at the point of collection/receipt of their medication.
+Database Integration: Integrate the mobile app with the existing Microsoft SQL Server database. The online orders made through the mobile app should appear in this database as well.
+Legacy System Maintenance: Ensure that the legacy desktop application developed in Delphi continues to function for face-to-face sales.
+Internet Connectivity: Since the health facility has reliable internet but does not have a public IP address, you may need to set up a secure method for the mobile app to communicate with the database. This could involve setting up a VPN, using a cloud database, or another suitable approach.
 
 ## SETTING UP THE APP
 gitclone

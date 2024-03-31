@@ -1,13 +1,11 @@
 
+//Razorpay.js
 import axios from 'axios';
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { env } from '../../config';
 
-
 import UserContext from '../Context/usercContext';
-
-
 
 function Razorpay() {
   let navigate = useNavigate();
@@ -16,6 +14,7 @@ function Razorpay() {
   const { order, payment, customer, paymenttype, billerId, billerName } = orders
   const { Total } = payment
   const send = async (id) => {
+    console.log('Customer ID:', billerId);
     let data = {
       payment_id: id,
       order,
@@ -25,10 +24,12 @@ function Razorpay() {
       billerName,
       billerId
     }
-    let mongo_id = await axios.post(`${env.api}/orders/order`, data);
-    setOrders({})
-    navigate(`/user-portal/order-success/${mongo_id.data.id}`)
-  }
+    console.log('Sending order data to backend:', data);
+  let response = await axios.post(`${env.api}/orders/order`, data);
+  console.log('Received order ID from backend:', response.data.id);
+  setOrders({})
+  navigate(`/user-portal/order-success/${response.data.id}`)
+}
   const handleSubmit = () => {
     var options = {
       key: "rzp_test_cSjwpLQPPi0Uxz",
