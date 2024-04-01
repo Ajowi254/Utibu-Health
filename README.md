@@ -48,7 +48,8 @@ here customer
 
 
 <img width="602" alt="SUCCESSFUL PAY" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/1946b2d8-06ab-4258-888b-64d6c46c8db7">
-<img width="601" alt="USE DETAILS" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/0ecbc2db-e06c-4cc3-9a2e-ab4434b35ce5"> alt="CART" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/2e4d3126-a535-4e34-94c4-5e864a09d3e9">
+<img width="596" alt="CART" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/9d0ba3d3-7a3b-4e66-b052-953099d18422">
+<img width="601" alt="USE DETAILS" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/0ecbc2db-e06c-4cc3-9a2e-ab4434b35ce5"> 
 <img width="596" alt="CHECK STATEMENT" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/bea94199-d8cf-41f7-8b10-f2352e9d430d">
 <img width="594" alt="CHOOSE PAYMENT" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/c7422fb0-1b10-4cf2-916d-5c81152d416f">
 <img width="595" alt="CVV" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/634209b1-6333-4e87-a269-2fe2ef93a0e6">
