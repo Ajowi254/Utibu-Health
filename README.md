@@ -23,7 +23,7 @@ STRICTLY FOLLOW EVERY LISTED PROCEDURE
 
 2. *Backend Setup*:
     1. Navigate to the server directory with cd server.
-    2. Install the required packages with pip install -r requirements.txt
+    2. Install the required packages by running pip install -r requirements.txt
     3. install flask-migrate by running pip install flask-migrate
     4. Navigate to the directory where your app.py file is located using the cd command.
     5. Initialize a new migration repository by running flask db init
@@ -33,9 +33,9 @@ STRICTLY FOLLOW EVERY LISTED PROCEDURE
     9. Run the app with python app.py You should be redirected to port 5000.
 
 3. *Frontend Setup*:
-    1. Navigate back to the project directory and then to the client directory with cd ../client.
-    2. Install the required packages with npm install.
-    3. Start the app with npm start. The app will open to port 3000.
+    1. Navigate back to the project directory and then to the client directory with cd client.
+    2. Install the required packages with npm install
+    3. Start the app with npm start and the app will open to port 3000.
 
 ## FLOW OF THE APP
 1. *Login Page*:
