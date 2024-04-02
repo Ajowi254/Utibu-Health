@@ -24,12 +24,12 @@ STRICTLY FOLLOW EVERY LISTED PROCEDURE
 2. *Backend Setup*:
     1. Navigate to the server directory with cd server.
     2. Install the required packages with pip install -r requirements.txt
-    3. If you’re not the owner of the repo, delete the migrations and instance folders and generate your own database. This process includes installing flask-migrate with pip install flask-migrate
+    3. install flask-migrate by running pip install flask-migrate
     4. Navigate to the directory where your app.py file is located using the cd command.
-    5. Initialize a new migration repository with flask db init
-    6. Create a new migration with flask db migrate -m "Initial migration."
-    7. Apply the migration to the database with flask db upgrade
-    8. Seed data with python seed.py
+    5. Initialize a new migration repository by running flask db init
+    6. Create a new migration by running flask db migrate -m "Initial migration."
+    7. Apply the migration to the database by running flask db upgrade
+    8. Seed data by running python seed.py
     9. Run the app with python app.py You should be redirected to port 5000.
 
 3. *Frontend Setup*:
