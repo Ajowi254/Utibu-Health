@@ -352,8 +352,9 @@ function OrderPage() {
             <label>Payment Type</label>
             <select className="form-select shadow-none" onChange={e => setPaymentType(e.target.value)}>
               <option selected value="Default">Select a Payment</option>
-              <option value="Offline_payment" >Offline Payment</option>
               <option value="online_payment" >Online Payment</option>
+              <option value="Offline_payment" >Offline Payment</option>
+              
             </select>
             {
               paymenterror ? (<div className="error">{paymenterror}</div>) : null

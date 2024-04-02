@@ -87,5 +87,5 @@ After that they are then redirected to a page they have to put an OTTP ...since 
 After the payment is successful, they can choose to get an invoice or add their orders.
 <img width="602" alt="SUCCESSFUL PAY" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/1946b2d8-06ab-4258-888b-64d6c46c8db7">
 
-6. *Order History*: The user can navigate to the ‘My Orders’ page to see their past order history and statements.
-<img width="596" alt="CHECK STATEMENT" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/bea94199-d8cf-41f7-8b10-f2352e9d430d">
+6. *Order History*: The user can navigate to the ‘My Orders’ page  which is circled on the dashboard to see their past order history and statements.
+<img width="1032" alt="yourorder" src="https://github.com/Ajowi254/Utibu-Health/assets/132816925/49fc8509-dd13-4360-8f16-9833989838f6">
